@@ -12,7 +12,9 @@ SECRET_KEY = 'a=pcpjhf07@@$^c+x(_4k!w#y&i6%!n-$d96f9q&##v&xe_490'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'kittttenbot.herokuapp.com',
+]
 
 # Application definition
 
