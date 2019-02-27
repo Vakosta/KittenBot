@@ -1,3 +1,34 @@
 from django.contrib import admin
 
-# Register your models here.
+from bot import models
+
+
+@admin.register(models.Step)
+class StepAdmin(admin.ModelAdmin):
+    list_display = (
+        'title',
+        'delay',
+        'date_of_begin',
+    )
+    search_fields = (
+        'title',
+        'message',
+        'delay',
+        'date_of_begin',
+    )
+
+
+@admin.register(models.Player)
+class PlayerAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'vk_id',
+        'step',
+    )
+    search_fields = (
+        'name',
+        'vk_id',
+    )
+    list_filter = (
+        'step',
+    )
