@@ -11,7 +11,7 @@ class VkView(APIView):
 
     def post(self, request):
         if request.data['type'] == 'confirmation':
-            return HttpResponse('e1511323', status=status.HTTP_200_OK)
+            return HttpResponse('5ff6093f', status=status.HTTP_200_OK)
 
         bot_vk.handle_incoming_message(request.data)
         return HttpResponse('ok', status=status.HTTP_200_OK)
