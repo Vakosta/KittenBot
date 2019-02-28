@@ -2,7 +2,7 @@ import json
 
 import vk
 
-session = vk.InteractiveSession('6bc146a313e1d99201ffc48d4958f79065ffba48e08329c905724891e06d30cbc0cbfefa2e9f5ffe406e3')
+session = vk.InteractiveSession('edda600957094d3d1560eec984903083ffb4556744a329048434baf7cc7b88197367db1da75a94f82ff69')
 api = vk.API(session)
 
 MESSAGE_START = 'Привет!✋'
