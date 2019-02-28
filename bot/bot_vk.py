@@ -50,7 +50,8 @@ def send_message(peer_id, message, keyboard=None):
 
 
 def handle_user_message(user_id, message):
-    pass
+    if message == 'Начать':
+        send_message(user_id, message)
 
 
 def handle_incoming_message(data):
@@ -58,5 +59,5 @@ def handle_incoming_message(data):
     peer_id = int(data['object']['peer_id'])
     message = data['object']['text'].lower()
 
-    if user_id == '123':
+    if user_id == '297582804':
         handle_user_message(user_id, message)
