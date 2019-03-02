@@ -9,11 +9,6 @@ MESSAGE_START = 'Привет!✋'
 
 COMMAND_TODAY = [
     'расписание',
-    'расписание на сегодня',
-    'оценки за сегодня',
-    'сводка за сегодня',
-    'сегодня',
-    'оценки',
 ]
 
 KEYBOARD_EMPTY = json.dumps({'one_time': True,
@@ -45,12 +40,12 @@ KEYBOARD_SETTINGS = json.dumps({'one_time': True,
 
 def send_message(peer_id, message, keyboard=None):
     if keyboard is None:
-        keyboard = KEYBOARD_MAIN
-    api.messages.send(v='5.84', peer_id=peer_id, message=message, keyboard=keyboard)
+        keyboard = KEYBOARD_EMPTY
+    api.messages.send(v='5.92', peer_id=peer_id, message=message, keyboard=keyboard)
 
 
 def handle_user_message(user_id, message):
-    if message == 'Начать':
+    if message == 'начать':
         send_message(user_id, message)
 
 
@@ -59,5 +54,5 @@ def handle_incoming_message(data):
     peer_id = int(data['object']['peer_id'])
     message = data['object']['text'].lower()
 
-    if user_id == '297582804':
+    if user_id == 297582804:
         handle_user_message(user_id, message)

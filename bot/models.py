@@ -1,6 +1,26 @@
 from django.db import models
 
 
+class Choice(models.Model):
+    command = models.CharField(verbose_name='команда',
+                               max_length=100,
+                               null=False,
+                               blank=False)
+
+    next_step = models.ForeignKey(to='Step',
+                                  on_delete=models.CASCADE,
+                                  verbose_name='следующий шаг',
+                                  null=False,
+                                  blank=False)
+
+    class Meta:
+        verbose_name = 'исход'
+        verbose_name_plural = 'исходы'
+
+    def __str__(self):
+        return self.command
+
+
 class Step(models.Model):
     title = models.CharField(verbose_name='заголовок',
                              max_length=100,
@@ -9,8 +29,13 @@ class Step(models.Model):
                                max_length=3000,
                                null=False)
     choices = models.ManyToManyField(verbose_name='исходы',
-                                     to='self',
+                                     to=Choice,
                                      blank=True)
+
+    when_online = models.BooleanField(verbose_name='когда онлайн',
+                                      default=False,
+                                      null=False,
+                                      blank=False)
     delay = models.TimeField(verbose_name='задержка',
                              null=True,
                              blank=True)

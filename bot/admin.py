@@ -3,6 +3,18 @@ from django.contrib import admin
 from bot import models
 
 
+@admin.register(models.Choice)
+class ChoiceAdmin(admin.ModelAdmin):
+    list_display = (
+        'command',
+        'next_step',
+    )
+    search_fields = (
+        'command',
+        'next_step',
+    )
+
+
 @admin.register(models.Step)
 class StepAdmin(admin.ModelAdmin):
     list_display = (
