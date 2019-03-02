@@ -36,6 +36,7 @@ class PlayerAdmin(admin.ModelAdmin):
         'name',
         'vk_id',
         'step',
+        'is_await',
     )
     search_fields = (
         'name',

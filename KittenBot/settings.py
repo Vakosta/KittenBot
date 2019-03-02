@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'raven.contrib.django.raven_compat',
-    'bot',
+    'bot.apps.BotConfig',
 ]
 
 MIDDLEWARE = [
