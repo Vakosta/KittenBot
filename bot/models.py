@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 
 
 class Choice(models.Model):
@@ -72,6 +73,10 @@ class Player(models.Model):
                                    default=False,
                                    null=False,
                                    blank=False)
+    time_of_last_step = models.DateTimeField(verbose_name='время последнего действия',
+                                             default=now,
+                                             null=False,
+                                             blank=False)
 
     class Meta:
         verbose_name = 'игрок'
