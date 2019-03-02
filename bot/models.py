@@ -26,8 +26,14 @@ class Step(models.Model):
                              max_length=100,
                              null=True)
     message = models.TextField(verbose_name='сообщение',
-                               max_length=3000,
+                               max_length=5000,
                                null=False)
+    next_step = models.ForeignKey(verbose_name='следующий шаг',
+                                  help_text='Если указано, то сразу осуществляется переход к следующему шагу.',
+                                  to='self',
+                                  on_delete=models.SET_NULL,
+                                  null=True,
+                                  blank=True)
     choices = models.ManyToManyField(verbose_name='исходы',
                                      to=Choice,
                                      blank=True)
@@ -62,6 +68,10 @@ class Player(models.Model):
                              on_delete=models.SET_NULL,
                              null=True,
                              blank=True)
+    is_await = models.BooleanField(verbose_name='в ожидании',
+                                   default=False,
+                                   null=False,
+                                   blank=False)
 
     class Meta:
         verbose_name = 'игрок'
