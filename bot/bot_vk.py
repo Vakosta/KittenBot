@@ -11,7 +11,7 @@ COMMAND_TODAY = [
     'расписание',
 ]
 
-KEYBOARD_EMPTY = json.dumps({'one_time': True,
+KEYBOARD_EMPTY = json.dumps({'one_time': False,
                              'buttons': []}, ensure_ascii=False)
 KEYBOARD_MAIN = json.dumps({'one_time': False,
                             'buttons': [
@@ -41,7 +41,7 @@ KEYBOARD_SETTINGS = json.dumps({'one_time': True,
 def send_message(peer_id, message, keyboard=None):
     if keyboard is None:
         keyboard = KEYBOARD_EMPTY
-    api.messages.send(v='5.92', peer_id=peer_id, message=message, keyboard=keyboard)
+    api.messages.send(v='5.84', peer_id=peer_id, message=message, keyboard=keyboard)
 
 
 def handle_user_message(user_id, message):

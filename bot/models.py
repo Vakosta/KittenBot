@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.timezone import now
 
+from bot import bot_vk
+
 
 class Choice(models.Model):
     command = models.CharField(verbose_name='команда',
@@ -84,3 +86,28 @@ class Player(models.Model):
 
     def __str__(self):
         return self.name
+
+    def send_answer(self):
+        self.is_await = False
+        bot_vk.send_message(self.vk_id, self.step.message)
+        if self.step.next_step is not None:
+            self.next_step()
+        self.save()
+
+    def activate_step(self, step):
+        if step.delay is not None or \
+                step.date_of_begin is not None:
+            self.step = step
+            self.is_await = True
+            self.save()
+        else:
+            self.step = step
+            self.send_answer()
+
+    def next_step(self, command=None):
+        if self.step.next_step is not None:
+            self.activate_step(self.step.next_step)
+        elif command is not None:
+            for choice in self.step.choices.all():
+                if command == choice.command:
+                    self.activate_step(choice.next_step)
