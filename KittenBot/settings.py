@@ -13,7 +13,7 @@ SECRET_KEY = 'a=pcpjhf07@@$^c+x(_4k!w#y&i6%!n-$d96f9q&##v&xe_490'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'kittttenbot.herokuapp.com',
+    'kitttenbot.herokuapp.com',
     '127.0.0.1',
 ]
 
