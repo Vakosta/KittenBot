@@ -11,6 +11,6 @@ def await_players_task(func):
                     func(player)
                 except Exception:
                     pass
-            time.sleep(3)
+            time.sleep(4)
 
     return wrapper
