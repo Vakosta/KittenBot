@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.utils.timezone import now
 
@@ -89,7 +91,19 @@ class Player(models.Model):
 
     def send_answer(self):
         self.is_await = False
-        bot_vk.send_message(self.vk_id, self.step.message)
+
+        keyboard = {'one_time': False,
+                    'buttons': [
+                    ]}
+
+        if len(self.step.choices.all()) > 0:
+            keyboard['buttons'].append([])
+        for button in self.step.choices.all():
+            keyboard['buttons'][0].append({'action': {'type': 'text', 'label': button.command},
+                                           'color': 'primary'}, )
+
+        bot_vk.send_message(self.vk_id, self.step.message, keyboard)
+        self.time_of_last_step = datetime.now()
         if self.step.next_step is not None:
             self.next_step()
         self.save()

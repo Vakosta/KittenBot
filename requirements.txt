@@ -1,6 +1,8 @@
 gunicorn==19.7.1
-django==2.1.7
+django==2.2.1
 djangorestframework==3.9.1
+psycopg2==2.8.1
 raven==6.9.0
 requests==2.21.0
 vk==2.0.2
+vk_api==11.4.0

@@ -67,8 +67,12 @@ WSGI_APPLICATION = 'KittenBot.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd7nvlrahre0gnt',
+        'USER': 'rvkhhyckjnvxst',
+        'PASSWORD': '24a04a4167d41f298e1ca5b0b85ec87455c88ae42cfbf3266eb567e64e6b38f1',
+        'HOST': 'ec2-54-217-207-242.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
     }
 }
 

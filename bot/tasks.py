@@ -4,7 +4,10 @@ from bot.decorators import await_players_task
 
 
 def get_seconds(t):
-    return int(datetime.timedelta(hours=t.hour, minutes=t.minute, seconds=t.second).total_seconds())
+    return int(datetime.timedelta(hours=t.hour,
+                                  minutes=t.minute,
+                                  seconds=t.second)
+               .total_seconds())
 
 
 @await_players_task
@@ -22,6 +25,7 @@ def step_condition_checker(player):
     except Exception:
         difference_time = 0
 
-    if difference_time >= delay_step and \
-            step.date_of_begin <= time_now:
+    if difference_time >= delay_step \
+            and (step.date_of_begin is None
+                 or (step.date_of_begin is not None and step.date_of_begin <= time_now)):
         player.send_answer()

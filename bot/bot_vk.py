@@ -1,18 +1,18 @@
 import json
 
-import vk
+import vk_api
+from vk_api.longpoll import VkLongPoll, VkEventType
 
-session = vk.InteractiveSession('edda600957094d3d1560eec984903083ffb4556744a329048434baf7cc7b88197367db1da75a94f82ff69')
-api = vk.API(session)
+session = vk_api.VkApi(token='edda600957094d3d1560eec984903083ffb4556744a329048434baf7cc7b88197367db1da75a94f82ff69')
+api = session.get_api()
 
-MESSAGE_START = 'Привет!✋'
+MESSAGE_START = 'Привет!'
 
 COMMAND_TODAY = [
     'расписание',
 ]
 
-KEYBOARD_EMPTY = json.dumps({'one_time': False,
-                             'buttons': []}, ensure_ascii=False)
+KEYBOARD_EMPTY = {'one_time': False, 'buttons': []}
 KEYBOARD_MAIN = json.dumps({'one_time': False,
                             'buttons': [
                                 [
@@ -41,7 +41,10 @@ KEYBOARD_SETTINGS = json.dumps({'one_time': True,
 def send_message(peer_id, message, keyboard=None):
     if keyboard is None:
         keyboard = KEYBOARD_EMPTY
-    api.messages.send(v='5.84', peer_id=peer_id, message=message, keyboard=keyboard)
+    api.messages.send(v='5.84',
+                      peer_id=peer_id,
+                      message=message,
+                      keyboard=json.dumps(keyboard, ensure_ascii=False))
 
 
 def handle_user_message(user_id, message):
@@ -56,3 +59,21 @@ def handle_incoming_message(data):
 
     if user_id == 297582804:
         handle_user_message(user_id, message)
+
+
+def longpoll_task():
+    from bot import models
+    longpoll = VkLongPoll(session)
+    while True:
+        for event in longpoll.listen():
+            if event.type == VkEventType.MESSAGE_NEW and event.to_me and event.text:
+                if event.from_user:
+                    try:
+                        player = models.Player.objects.get(pk=event.from_user)
+                        for choice in player.step.choices.all():
+                            if choice.command == event.text:
+                                player.step = choice.next_step
+                                player.save()
+                                player.send_answer()
+                    except Exception:
+                        pass
