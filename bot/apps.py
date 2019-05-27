@@ -28,14 +28,14 @@ class BotConfig(AppConfig):
                     startScheduler = False
 
         if startScheduler:
+            pass
+        else:
             threading.Thread(target=bot_vk.longpoll_task,
                              name='LongPoll',
                              daemon=True).start()
             threading.Thread(target=tasks.step_condition_checker,
                              name='StepConditionChecker',
                              daemon=True).start()
-        else:
-            print("[%s] WILL NOT START SCHEDULER", mypid)
 
     def getMaxRunningGunicornPid(self):
         running_pids = psutil.pids()
