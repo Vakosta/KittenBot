@@ -28,7 +28,12 @@ class BotConfig(AppConfig):
                     startScheduler = False
 
         if startScheduler:
-            pass
+            threading.Thread(target=bot_vk.longpoll_task,
+                             name='LongPoll',
+                             daemon=True).start()
+            threading.Thread(target=tasks.step_condition_checker,
+                             name='StepConditionChecker',
+                             daemon=True).start()
         else:
             threading.Thread(target=bot_vk.longpoll_task,
                              name='LongPoll',
