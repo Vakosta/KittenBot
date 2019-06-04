@@ -1,5 +1,6 @@
 import datetime
 
+from bot import bot_vk
 from bot.decorators import await_players_task
 
 
@@ -28,4 +29,5 @@ def step_condition_checker(player):
     if difference_time >= delay_step \
             and (step.date_of_begin is None
                  or (step.date_of_begin is not None and step.date_of_begin <= time_now)):
-        player.send_answer()
+        if not step.when_online or (step.when_online and bot_vk.get_online(player.vk_id)):
+            player.send_answer()

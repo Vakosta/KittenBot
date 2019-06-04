@@ -61,6 +61,10 @@ def handle_incoming_message(data):
         handle_user_message(user_id, message)
 
 
+def get_online(user_id):
+    return api.users.get(v='5.84', user_ids=user_id, fields='online,last_seen')[0]['online']
+
+
 def longpoll_task():
     from bot import models
     longpoll = VkLongPoll(session)
@@ -69,7 +73,7 @@ def longpoll_task():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me and event.text:
                 if event.from_user:
                     try:
-                        player = models.Player.objects.get(pk=event.from_user)
+                        player = models.Player.objects.get(vk_id=event.user_id)
                         for choice in player.step.choices.all():
                             if choice.command == event.text:
                                 player.step = choice.next_step
